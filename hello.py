@@ -5,11 +5,20 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+import os
+from flask_sqlalchemy import SQLAlchemy
 
 # ...
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'hard to guess string'
+
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
